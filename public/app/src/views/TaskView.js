@@ -3,94 +3,42 @@
  */
 
 import Marionette from "backbone.marionette";
+import templateView from "../templates/task-template.hbs";
 
+import "moment";
+import "moment/locale/fr"
+import datetime from "../bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker";
 
-import templateViem from "../templates/login-template.hbs";
-
-
-export default class LoginView extends Marionette.ItemView{
+export default class TaskView extends Marionette.ItemView{
 
     /**
      * si méthode initialize pas besoin de redefinir le constructeur
      * @param options
      */
-    /*
-    constructor(options){ 
+
+    constructor(options) {
         super(options);
+        this.template = templateView;
+        console.log(datetime);
     }
-    */
-    /**
-     * ICI lors de l'instanciation de la vue on lui affecte son template par défaut et le model
-     * dont elle va gérer le rendu --- on ne redéfinit la méthode renderer que quand on aura des trucs spécifics à faire
-     * Notamment lors de l'affichage d'une collection ...
-     * contructeur
-     * @param options
-     */
-    initialize(options){
-        this.template = templateViem;
-        this.model = options.model;
-        console.log("Instanciation de la vue");
+    onRender(){ 
+        this.ui.dateInput.data('DateTimePicker');
+        this.ui.dateInput.datetimepicker({
+            locale:"fr",
+            format: "DD/MM/YYYY",
+            defaultDate: new Date()
+        });
     }
 
-    /**
-     * Ici on cable les évènements des éléments du DOM avec des méthodes
-     * @override
-     * @returns {{[click @ui.button]: string, [change @ui.loginInputText]: string, [change @ui.passwordInputText]: string}}
-     */
     events(){
         return {
-            "click @ui.button"               :"connect",
-            "change @ui.loginInputText"      :"onLoginChange",
-            "change @ui.passwordInputText"   :"onPasswordChange"
+            "click @ui.dateInput":"createDatePicker"
         };
     }
 
-    /**
-     * Ici on cable les éléments du DOM qu'on stocke dans un tableau "associatif" ui qui nous permettra de les réutiliser comme objet
-     * @override
-     * @returns {{button: string, loginInputText: string, passwordInputText: string}}
-     */
     ui(){
         return {
-            button              :   ".login-button",
-            loginInputText      :   ".login",
-            passwordInputText   :   ".password"
+            dateInput    :   "#datetimepicker1"
         };
     }
-
-    /**
-     * Permet de personnaliser le tag parent qui va englobler ton template et donc ta vue.
-     * NE PAS LA LASSER VIDE ou mettre "SPAN"
-     * si on ne la redéfinit pas elle renvoie une "<div>"
-     * @returns {string}
-     */
-    tagName(){
-        return "p";
-    }
-
-    /**
-     * classe CSS qu'on affectera directement au au container parent de cette vue
-     * @returns {string}
-     */
-
-    className(){
-        return "login-center";
-    }
-
-    onLoginChange(){
-        this.model.setLogin( this.ui.loginInputText.val() );
-    }
-
-    onPasswordChange(){
-        this.model.set("password", this.ui.passwordInputText.val());
-    }
-
-    connect(){
-        if( this.model.getLogin() === "dpassyann" && this.model.get("password") === "deungoue" ){
-            this.model.set("connected", true);
-            this.model.save();
-        }
-        console.log("this", this.model.toJSON());
-    }
-
 }

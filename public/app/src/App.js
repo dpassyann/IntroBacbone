@@ -4,21 +4,21 @@
 import Marionette from "backbone.marionette";
 import Backbone from "backbone";
 import Routes from "./Routes";
-
+import Polyglot from "node-polyglot";
+import * as Util from "./config/SharedUtils"
 import TaskController from "./controllers/TaskController";
 import HomeController from "./controllers/HomeController";
-
 import ApplicationRegionManager from "./regions/manager/ApplicationRegionManager";
+
+
+
 
 let _regionManager = null;
 
 export default class MyApp extends Marionette.Application{
 
-    start(){
-        if (Backbone.history) {
-            Backbone.history.start();
-        }
-    }
+
+
 
     initialize( options ){
 
@@ -30,6 +30,8 @@ export default class MyApp extends Marionette.Application{
             "task":"tasks"
         });
         console.log("hello from the addInitializer.");
+        
+        window.router = router;
 
     }
 
@@ -45,6 +47,27 @@ export default class MyApp extends Marionette.Application{
     }
 }
 
+
+
 window.app = new MyApp();
+
+window.app.on("before:start", function(options){
+    let locale = localStorage.getItem("locale") || "fr";
+    let phrases = null;
+    if( locale === "fr"){
+        phrases = Util.LABEL_fr;
+    }else{
+        phrases = Util.LABEL_en;
+    }
+
+    window.polyglot = new Polyglot({ phrases: phrases });
+    console.log("before:start");
+});
+
+window.app.on("start", function(){
+    if (Backbone.history) {
+        Backbone.history.start();
+    }
+});
 
 window.app.start();

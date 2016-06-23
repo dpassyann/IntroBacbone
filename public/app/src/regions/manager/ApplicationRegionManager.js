@@ -4,7 +4,7 @@
 
 import Marionette from "backbone.marionette";
 
-import * as sharedConstants from "../../config/SharedUtils"
+import * as sharedConstants from "../../config/SharedUtils";
 
 export default class ApplicationRegionManager extends Marionette.RegionManager{
 
@@ -12,6 +12,6 @@ export default class ApplicationRegionManager extends Marionette.RegionManager{
     regions(){
         return {
             container : sharedConstants.CONTAINER
-        }
+        };
     }
 }

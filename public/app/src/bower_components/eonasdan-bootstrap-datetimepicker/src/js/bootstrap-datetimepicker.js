@@ -39,7 +39,8 @@
         // AMD is used - Register as an anonymous module.
         define(['jquery', 'moment'], factory);
     } else if (typeof exports === 'object') {
-        factory(require('jquery'), require('moment'));
+        module.exports = factory(require('jquery'), require('moment'));
+        return module.exports;
     } else {
         // Neither AMD nor CommonJS used. Use global variables.
         if (typeof jQuery === 'undefined') {
@@ -2355,6 +2356,8 @@
      *
      ********************************************************************************/
 
+
+
     $.fn.datetimepicker = function (options) {
         return this.each(function () {
             var $this = $(this);
@@ -2549,4 +2552,6 @@
         enabledHours: false,
         viewDate: false
     };
+
+    return $.fn;
 }));

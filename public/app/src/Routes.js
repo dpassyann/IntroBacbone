@@ -20,6 +20,7 @@ export default class Routes extends Marionette.AppRouter {
      */
     onRoute(){
         console.log("I'm routing");
+        //location.reload();
     }
 }
 

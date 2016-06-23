@@ -3,12 +3,18 @@
  */
 
 import Marionette from "backbone.marionette";
+import TaskView from "../views/TaskView";
+import UserModel from "../models/UserModel";
 
 export default class TaskController extends Marionette.Controller{
     /**
      * Méthode qu'expose mon controlleur pour répondre à un path.
      */
     tasks(){
-        console.log("List all the tasks");
+        console.log("I'm TaskController");
+        let view = new TaskView();
+        let regionManger = window.app.getRegionManager();
+        let region = regionManger.get("container");
+        region.show(view);
     }
 }

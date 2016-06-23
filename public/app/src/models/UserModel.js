@@ -11,8 +11,9 @@ export default class UserModel extends Backbone.Model {
      * Je crée les attributs de mon model et je les initialise
      */
     defaults() {
-        this.attributes.login = "YannDeunGoUe";
-        this.attributes.password = "TiTO";
+        this.attributes.title = window.polyglot.t("login.title");
+        this.attributes.login = "dpassyann";
+        this.attributes.password = "deungoue";
         this.attributes.connected = false;
     }
 

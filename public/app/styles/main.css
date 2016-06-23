@@ -272,3 +272,8 @@ label:hover:before {
     color: #aaaaaa;
     font-weight: bold;
 }
+
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom {
+    top: 26px !important;
+}
+
